@@ -1,0 +1,14 @@
+@if (!videos) {<p>Loading...</p>}
+@else {
+  @for (video of videos; track $index) {
+    <div>
+      <video [src]="video.url"></video>
+      <h3>{{ video.title }}</h3>
+      <p>{{ video.description }}</p>
+      <h4>{{ video.user.username }}</h4>
+      <p>{{ video.timestamp }}</p>
+      <p>{{ video.likes  }}</p>
+    </div>
+  }
+}
+

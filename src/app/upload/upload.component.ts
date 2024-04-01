@@ -1,33 +1,51 @@
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { environment } from '../../environments/environment.development';
 
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+
 @Component({
   selector: 'app-upload',
+  standalone: true,
+  imports: [
+    MatButtonModule, MatProgressBarModule,
+    VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule,
+  ],
   templateUrl: './upload.component.html',
-  styleUrl: './upload.component.css'
+  styleUrl: './upload.component.css',
+  
 })
 export class UploadComponent {
   selectedFile: File | null = null;
   uploadProgress: number = 0;
   uploadState: string = '';
   downloadURL: string | null = null;
+  videoURL: string | null = null;
 
   constructor() {
     initializeApp(environment.firebaseConfig);
   }
 
   resetUploadInfo() {
+    this.selectedFile = null;
     this.uploadProgress = 0;
     this.uploadState = '';
     this.downloadURL = null;
   }
 
   onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
     // Reset upload info on new file selection
     this.resetUploadInfo(); 
+    
+    this.selectedFile = event.target.files[0];
+    this.videoURL = URL.createObjectURL(event.target.files[0]);
   }
 
   async uploadFile() {

@@ -1,20 +1,15 @@
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.page {
+  padding: 2rem;
 }
 
-mat-card {
-  width: 400px;
+input {
+  display: none;
 }
 
-mat-card-header {
-  justify-content: center;
+.videoWrapper {
+  width: 100%;
 }
 
-mat-card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+button {
+  margin-bottom: 1rem;
 }

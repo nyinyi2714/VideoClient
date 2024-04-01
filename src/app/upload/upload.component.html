@@ -1,20 +1,50 @@
-<div class="upload-container">
-  <input type="file" accept="video/*" (change)="onFileSelected($event)">
+<div class="page">
+  <button mat-flat-button color="primary" (click)="fileInput.click()">Select Video</button>
+  <input #fileInput type="file" accept="video/*" (change)="onFileSelected($event)">
   <br>
   @if (selectedFile) {
-    <button (click)="uploadFile()">Upload Video</button>
+    <div class="videoWrapper">
+      <vg-player>
+        <vg-overlay-play></vg-overlay-play>
+        <vg-buffering></vg-buffering>
+    
+        <vg-scrub-bar>
+            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+        </vg-scrub-bar>
+    
+        <vg-controls>
+            <vg-play-pause></vg-play-pause>
+            <vg-playback-button></vg-playback-button>
+    
+            <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+    
+            <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+    
+            <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+    
+            <vg-mute></vg-mute>
+            <vg-volume></vg-volume>
+    
+            <vg-fullscreen></vg-fullscreen>
+        </vg-controls>
+    
+        <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin>
+            <source [src]="videoURL" type="video/mp4">
+        </video>
+    </vg-player>
+    </div>
+
+    <p>{{ selectedFile.name }}</p>
+
+    <button mat-flat-button color="primary" (click)="uploadFile()">
+      Upload Video
+    </button> 
   }
 
   @if (uploadProgress > 0) {
     <p>Uploading... {{ uploadProgress }}% complete</p>
-    <div class="progress-bar">
-      <div class="progress" [style.width]="uploadProgress + '%'"></div>
-    </div>
-  }
-
-
-  @if (downloadURL) {
-    <p>Upload complete! Your video is available at: <a href="{{ downloadURL }}">{{ downloadURL }}</a></p>
+    <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
   }
 
 </div>

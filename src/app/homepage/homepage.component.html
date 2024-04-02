@@ -1,14 +1,49 @@
-@if (!videos) {<p>Loading...</p>}
+@if (!recentVideos || !popularVideos) {<p>Loading...</p>}
 @else {
-  @for (video of videos; track $index) {
-    <div>
-      <video [src]="video.url"></video>
-      <h3>{{ video.title }}</h3>
-      <p>{{ video.description }}</p>
-      <h4>{{ video.user.username }}</h4>
-      <p>{{ video.timestamp }}</p>
-      <p>{{ video.likes  }}</p>
-    </div>
-  }
+  <section class="homepage">
+    <h2>New Videos</h2>
+    <article class="videos-container">
+      @for (video of recentVideos; track $index) {
+        <mat-card class="video-card" (click)="openVideo(video.videoId)">
+          <video src="https://www3.cde.ca.gov/download/rod/big_buck_bunny.mp4"></video>
+        
+          <mat-card-content>
+            <mat-card-title>{{ video.title }}</mat-card-title>
+            <div class="profile">
+              <span>{{ video.user.username[0] }}</span>
+              <h3>{{ video.user.username }}</h3>
+            </div>
+            <div class="footer-content">
+              <p>{{ video.likes }} Likes</p>
+              <p>{{ formatDate(video.timestamp) }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </article>
+
+    <h2>Popular Videos</h2>
+    <article class="videos-container">
+      @for (video of recentVideos; track $index) {
+        <mat-card class="video-card" (click)="openVideo(video.videoId)">
+          <video src="https://www3.cde.ca.gov/download/rod/big_buck_bunny.mp4"></video>
+        
+          <mat-card-content>
+            <mat-card-title>{{ video.title }}</mat-card-title>
+            <div class="profile">
+              <span>{{ video.user.username[0] }}</span>
+              <h3>{{ video.user.username }}</h3>
+            </div>
+            <div class="footer-content">
+              <p>{{ video.likes }} Likes</p>
+              <p>{{ formatDate(video.timestamp) }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </article>
+    
+  </section>
+
 }
 

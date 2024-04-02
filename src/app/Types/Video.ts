@@ -1,11 +1,11 @@
 import { UserType } from "./User";
 
 export type VideoType = {
-  videoId: Number;
-  url: String;
-  title: String;
-  description: String;
-  likes: Number;
-  timestamp: String;
+  videoId: number;
+  url: string;
+  title: string;
+  description: string;
+  likes: number;
+  timestamp: string;
   user: UserType;
 }

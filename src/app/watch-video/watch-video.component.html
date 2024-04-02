@@ -1,0 +1,54 @@
+@if (mainVideo != null) {
+<div class="video-page">
+
+  <div class="main-content">
+    <div class="video-wrapper">
+      <app-video-player [videoURL]="mainVideo.url"></app-video-player>
+    </div>
+
+    <h2>{{ mainVideo.title }}</h2>
+    <div class="profile" (click)="viewUserProfile(mainVideo.user.userId)">
+      <span>{{ mainVideo.user.username[0] }}</span>
+      <h3>{{ mainVideo.user.username }}</h3>
+    </div>
+
+    <div class="background-color">
+      <div class="footer-content">
+        <p>{{ mainVideo.likes }} Likes</p>
+        <p>{{ formatDate(mainVideo.timestamp) }}</p>
+      </div>
+      <p class="video-description">{{ mainVideo.description }}</p>
+    </div>
+
+  </div>
+
+  <div class="aside">
+    <h2>Next Videos</h2>
+    @if(userVideos != null && userVideos.length > 0) {
+      @for (video of userVideos; track $index) {
+        <div class="video-card" (click)="openAnotherVideo(video.videoId)">
+          <video [src]="video.url"></video>
+          <div class="aside-video">
+            <h3 class="video-title">{{ video.title }}</h3>
+            <div class="profile">
+              <span>{{ video.user.username[0] }}</span>
+              <h4>{{ video.user.username }}</h4>
+            </div>
+            <div class="footer-content">
+              <p>{{ video.likes }} Likes</p>
+              <p>{{ formatDate(video.timestamp) }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    }
+    @else {
+      <p class="message">No more Videos from the current video uploader.</p>
+    }
+  </div>
+</div>
+}
+
+@else {
+<p>no video found!</p>
+}

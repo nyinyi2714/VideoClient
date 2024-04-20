@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserType } from '../Types/User';
 import { environment } from '../../environments/environment.development';
 
@@ -12,25 +12,23 @@ import { environment } from '../../environments/environment.development';
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
-  userId: string = '';
   user: UserType | null = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.getUserId();
-    this.getUserInfo();
+    // Access the user id from the route parameters
+    let userId: string | null = this.route.snapshot.paramMap.get("userId");
+    // Redirect to 404 page if no userId 
+    if(!userId) {
+      this.router.navigate(['/page-not-found']);
+      return
+    }
+    this.getUserInfo(userId);
   }
 
-  // Access the video id from the route parameters
-  getUserId() {
-    this.route.params.subscribe(params => {
-      this.userId = params['videoId'];
-    });
-  }
-
-  getUserInfo() {
-    this.http.get<UserType>(environment.baseURL + `Users/${this.userId}`).subscribe(
+  getUserInfo(userId: string) {
+    this.http.get<UserType>(environment.baseURL + `Users/${userId}`).subscribe(
       {
         next: result => {
           this.user = result;

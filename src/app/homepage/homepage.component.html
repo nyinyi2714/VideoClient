@@ -5,7 +5,7 @@
     <article class="videos-container">
       @for (video of recentVideos; track $index) {
         <mat-card class="video-card" (click)="openVideo(video.videoId)">
-          <video src="https://www3.cde.ca.gov/download/rod/big_buck_bunny.mp4"></video>
+          <video [src]="video.url"></video>
         
           <mat-card-content>
             <mat-card-title>{{ video.title }}</mat-card-title>
@@ -14,7 +14,7 @@
               <h3>{{ video.user.username }}</h3>
             </div>
             <div class="footer-content">
-              <p>{{ video.likes }} Likes</p>
+              <p>{{ video.views }} views</p>
               <p>{{ formatDate(video.timestamp) }}</p>
             </div>
           </mat-card-content>
@@ -26,7 +26,7 @@
     <article class="videos-container">
       @for (video of recentVideos; track $index) {
         <mat-card class="video-card" (click)="openVideo(video.videoId)">
-          <video src="https://www3.cde.ca.gov/download/rod/big_buck_bunny.mp4"></video>
+          <video [src]="video.url"></video>
         
           <mat-card-content>
             <mat-card-title>{{ video.title }}</mat-card-title>
@@ -35,7 +35,7 @@
               <h3>{{ video.user.username }}</h3>
             </div>
             <div class="footer-content">
-              <p>{{ video.likes }} Likes</p>
+              <p>{{ video.views }} views</p>
               <p>{{ formatDate(video.timestamp) }}</p>
             </div>
           </mat-card-content>

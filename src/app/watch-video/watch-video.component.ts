@@ -17,27 +17,26 @@ import { environment } from '../../environments/environment.development';
   styleUrl: './watch-video.component.css'
 })
 export class WatchVideoComponent {
-  videoId: string = '';
   mainVideo: VideoType | null = null;
   userVideos: VideoType[] | null = null;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.getVideoId();
-    this.getVideoData();
-  }
+    // Access the video id from the route parameters
+    let videoId: string | null = this.route.snapshot.paramMap.get("videoId");
 
-  // Access the video id from the route parameters
-  getVideoId() {
-    this.route.params.subscribe(params => {
-      this.videoId = params['videoId'];
-    });
+    // Redirect to 404 page if no videoId
+    if(!videoId) {
+      this.router.navigate(['/page-not-found']);
+      return
+    }
+    this.getVideoData(videoId);
   }
 
   // Fetch video data from server using the videoId
-  getVideoData() {
-    this.http.get<VideoType>(environment.baseURL + `Videos/${this.videoId}`).subscribe(
+  getVideoData(videoId: string) {
+    this.http.get<VideoType>(environment.baseURL + `Videos/${videoId}`).subscribe(
       {
         next: result => {
           this.mainVideo = result;

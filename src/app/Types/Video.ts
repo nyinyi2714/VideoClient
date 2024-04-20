@@ -5,7 +5,7 @@ export type VideoType = {
   url: string;
   title: string;
   description: string;
-  likes: number;
+  views: number;
   timestamp: string;
   user: UserType;
 }

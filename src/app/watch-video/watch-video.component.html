@@ -14,7 +14,7 @@
 
     <div class="background-color">
       <div class="footer-content">
-        <p>{{ mainVideo.likes }} Likes</p>
+        <p>{{ mainVideo.views }} views</p>
         <p>{{ formatDate(mainVideo.timestamp) }}</p>
       </div>
       <p class="video-description">{{ mainVideo.description }}</p>
@@ -26,6 +26,7 @@
     <h2>Next Videos</h2>
     @if(userVideos != null && userVideos.length > 0) {
       @for (video of userVideos; track $index) {
+        <!-- TODO: Instead of OpenANotherVideo, change it to Link -->
         <div class="video-card" (click)="openAnotherVideo(video.videoId)">
           <video [src]="video.url"></video>
           <div class="aside-video">
@@ -35,7 +36,7 @@
               <h4>{{ video.user.username }}</h4>
             </div>
             <div class="footer-content">
-              <p>{{ video.likes }} Likes</p>
+              <p>{{ video.views }} views</p>
               <p>{{ formatDate(video.timestamp) }}</p>
             </div>
           </div>

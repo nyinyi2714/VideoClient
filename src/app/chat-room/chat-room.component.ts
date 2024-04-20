@@ -14,8 +14,6 @@ export class ChatRoomComponent {
   messages: string[] = [];
   username: string = 'test';
 
-  constructor() { }
-
   ngOnInit(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`ws://localhost:5137/chat?username=${encodeURIComponent(this.username)}`, {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
@@ -16,7 +16,7 @@ import { environment } from '../../environments/environment.development';
   templateUrl: './watch-video.component.html',
   styleUrl: './watch-video.component.css'
 })
-export class WatchVideoComponent {
+export class WatchVideoComponent implements OnInit {
   mainVideo: VideoType | null = null;
   userVideos: VideoType[] | null = null;
 

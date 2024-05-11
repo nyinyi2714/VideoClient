@@ -14,6 +14,4 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 })
 export class VideoPlayerComponent {
   @Input() videoURL: string = '';
-  // CSS MaxWidth
-  @Input() maxWidth: string = '100%';
 }

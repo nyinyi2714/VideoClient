@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserType } from '../Types/User';
 import { environment } from '../../environments/environment.development';
@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment.development';
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
   user: UserType | null = null;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }

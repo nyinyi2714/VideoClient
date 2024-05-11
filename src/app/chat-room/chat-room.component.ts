@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as signalR from '@aspnet/signalr';
 import { UserType } from '../Types/User';
 
@@ -9,7 +9,7 @@ import { UserType } from '../Types/User';
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.css']
 })
-export class ChatRoomComponent {
+export class ChatRoomComponent implements OnInit, OnDestroy {
   private hubConnection: signalR.HubConnection | null = null;
   messages: string[] = [];
   username: string = 'test';

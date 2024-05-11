@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 
 import { formatDate } from '@angular/common';
@@ -15,9 +15,10 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
-export class HomepageComponent {
+export class HomepageComponent implements OnInit {
   public recentVideos : VideoType[] = [];
   public popularVideos : VideoType[] = [];
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {

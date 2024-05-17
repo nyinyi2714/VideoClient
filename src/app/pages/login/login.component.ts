@@ -19,14 +19,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new UntypedFormGroup({ 
-      username: new FormControl('', Validators.required), 
+      email: new FormControl('', [Validators.required, Validators.email]), 
       password: new FormControl('', Validators.required)
     });
   }
 
-  onSubmit() {
+  onSubmit(event: any) {
+    event.preventDefault();
+    if(this.form.status === "INVALID") {
+      console.log('a')
+      this.errorMessage = "Please enter valid inputs in the above fields."
+      return;
+    }
+
     let loginRequest : LoginRequest = <LoginRequest> { 
-      username: this.form.controls["username"].value,
+      email: this.form.controls["email"].value,
       password: this.form.controls["password"].value
     };
 

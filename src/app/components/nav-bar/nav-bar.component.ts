@@ -20,8 +20,6 @@ import { AuthService } from '../../services/auth/auth.service';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
-
-
  
 export class NavBarComponent implements OnInit, OnDestroy {
   isLoggedIn = false;

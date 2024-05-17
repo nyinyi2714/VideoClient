@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router'; 
-
-import { formatDate } from '@angular/common';
+import { RouterLink } from '@angular/router'; 
 import { MatCardModule } from '@angular/material/card'
 
 import { VideoType } from '../../Types/Video';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
+import { DateUtils } from '../../utils/date-utils';
 
 @Component({
   selector: 'app-homepage',
@@ -19,7 +18,7 @@ export class HomepageComponent implements OnInit {
   public recentVideos : VideoType[] = [];
   public popularVideos : VideoType[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private dateUtils: DateUtils) {}
 
   ngOnInit() {
     this.getRecentVideos();
@@ -44,8 +43,7 @@ export class HomepageComponent implements OnInit {
     );
   }
 
-  // Format the timestamp to show day, month, year
-  formatDate(timestamp: string): string {
-    return formatDate(timestamp, 'dd MMM yyyy', 'en-US');
+  formatDate(timestamp : string) {
+    return this.dateUtils.formatDate(timestamp);
   }
 }

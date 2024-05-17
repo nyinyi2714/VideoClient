@@ -31,6 +31,10 @@ input, .input {
   width: 100%;
 }
 
+.input > p {
+  color: #cd0000;
+}
+
 label {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
@@ -48,7 +52,7 @@ button {
   width: 100%;
   color: #fff;
   font-size: 1.1rem;
-  background-color: #c2185b;
+  background-color: var(--primary-color);
   display: block;
 }
 

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { formatDate } from '@angular/common';
+
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserProfileType } from '../../Types/UserProfile';
 import { environment } from '../../../environments/environment.development';
 import { MatCardModule } from '@angular/material/card';
+import { DateUtils } from '../../utils/date-utils';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,8 +16,16 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class UserProfileComponent implements OnInit {
   user: UserProfileType | null = null;
+  currVideoIndexSkip = 0;
+  isLoadingVideos = false;
+  username = '';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private http: HttpClient, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private dateUtils: DateUtils
+  ) { }
 
   ngOnInit() {
     // Access the user id from the route parameters
@@ -26,11 +35,13 @@ export class UserProfileComponent implements OnInit {
       this.router.navigate(['/page-not-found']);
       return
     }
-    this.getUserInfo(username);
+    this.username = username;
+    this.getUserInfo();
   }
 
-  getUserInfo(username: string) {
-    this.http.get<UserProfileType>(environment.baseURL + `Users/${username}`).subscribe(
+  getUserInfo() {
+    this.http.get<UserProfileType>(
+        environment.baseURL + `Users/${this.username}`).subscribe(
       {
         next: result => {
           this.user = result;
@@ -40,8 +51,24 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  // Format the timestamp to show day, month, year
-  formatDate(timestamp: string): string {
-    return formatDate(timestamp, 'dd MMM yyyy', 'en-US');
+  // TODO: Delete button
+
+  loadMoreVideos() {
+    this.http.get<UserProfileType>(
+      environment.baseURL + `Users/${this.username}${++this.currVideoIndexSkip > 0 
+      ? '?skip=' + this.currVideoIndexSkip : ''}`
+    ).subscribe(
+    {
+      next: result => {
+        if(this.user) this.user.videos.push(...result.videos);
+      },
+      error: error => console.error(error)
+    }
+  );
   }
+
+  formatDate(timestamp : string) {
+    return this.dateUtils.formatDate(timestamp);
+  }
+  
 }

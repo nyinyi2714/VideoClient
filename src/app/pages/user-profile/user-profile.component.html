@@ -1,11 +1,13 @@
 <section class="user-profile">
   <h1>{{user?.username}}</h1>
-  <h2>{{ user?.videos?.length }} Videos</h2>
+  <h2>Total {{ user?.totalVideos }} Videos</h2>
   <div class="videos-container">
     @for (video of user?.videos; track $index) {
       <a [routerLink]="['/video/', video.videoId]">
         <mat-card class="video-card">
-          <video [src]="video.url"></video>
+          <video preload="metadata">
+            <source [src]="video.url + '#t=10'" type="video/mp4">
+          </video>
         
           <mat-card-content>
             <mat-card-title>{{ video.title }}</mat-card-title>
@@ -26,5 +28,14 @@
       </a>
     }
   </div>
-  
+  @if(user && ((currVideoIndexSkip+1)*5) < user.totalVideos) {
+    <div class="btn-wrapper">
+      <button class="btn" type="button" [disabled]="isLoadingVideos" (click)="loadMoreVideos()">
+        {{isLoadingVideos ? 'Loading More Videos' : 'View More'}}
+      </button>
+    </div>
+  }
+  @else {
+    <p class="end-of-list"><span>End of the List</span></p>
+  }
 </section>

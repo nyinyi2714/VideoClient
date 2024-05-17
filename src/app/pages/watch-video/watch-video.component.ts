@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { formatDate } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -9,6 +8,7 @@ import { VideoPlayerComponent } from '../../components/video-player/video-player
 import { VideoType } from '../../Types/Video';
 import { environment } from '../../../environments/environment.development';
 import { UserProfileType } from '../../Types/UserProfile';
+import { DateUtils } from '../../utils/date-utils';
 
 @Component({
   selector: 'app-watch-video',
@@ -21,19 +21,33 @@ export class WatchVideoComponent implements OnInit {
   mainVideo: VideoType | null = null;
   userVideos: VideoType[] | null = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private http: HttpClient, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private dateUtils: DateUtils
+  ) { }
 
   ngOnInit() {
     // Access the video id from the route parameters
     let videoId: string | null = this.route.snapshot.paramMap.get("videoId");
 
     // Redirect to 404 page if no videoId
-    if(!videoId) {
+    if (!videoId) {
       this.router.navigate(['/page-not-found']);
-      return
+      return;
     }
+
     this.getVideoData(videoId);
   }
+
+  changeVideo(videoId: number) {
+    this.router.navigate([`/video/${videoId}`]);
+    // to reload the video player to play the new video src
+    location.reload(); 
+  }
+  
+  // TODO: button to get more video. get total video to determine the end
 
   // Fetch video data from server using the videoId
   getVideoData(videoId: string) {
@@ -63,8 +77,7 @@ export class WatchVideoComponent implements OnInit {
     }
   }
 
-  // Format the timestamp to show day, month, year
-  formatDate(timestamp: string): string {
-    return formatDate(timestamp, 'dd MMM yyyy', 'en-US');
+  formatDate(timestamp : string) {
+    return this.dateUtils.formatDate(timestamp);
   }
 }

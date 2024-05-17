@@ -1,12 +1,14 @@
 @if (!recentVideos || !popularVideos) {<p>Loading...</p>}
 @else {
   <section class="homepage">
-    <h2>New Videos</h2>
+    <h2>Recented Added</h2>
     <article class="videos-container">
       @for (video of recentVideos; track $index) {
         <a [routerLink]="['/video/', video.videoId]">
           <mat-card class="video-card">
-            <video [src]="video.url"></video>
+            <video preload="metadata">
+              <source [src]="video.url + '#t=10'" type="video/mp4">
+            </video>
           
             <mat-card-content>
               <mat-card-title>{{ video.title }}</mat-card-title>
@@ -37,7 +39,9 @@
       @for (video of popularVideos; track $index) {
         <a [routerLink]="['/video/', video.videoId]">
           <mat-card class="video-card">
-            <video [src]="video.url"></video>
+            <video preload="metadata">
+              <source [src]="video.url + '#t=10'" type="video/mp4">
+            </video>
           
             <mat-card-content>
               <mat-card-title>{{ video.title }}</mat-card-title>

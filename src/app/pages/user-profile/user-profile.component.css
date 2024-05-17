@@ -11,7 +11,7 @@ h1 {
 }
 
 .video-card {
-  width: max-content;
+  max-width: 300px;
   background-color: #fff;
   border: 1px solid var(--light-grey);
   cursor: pointer;
@@ -44,3 +44,10 @@ h3 {
   font-size: 0.85rem;
   color: rgb(98, 98, 98);
 }
+
+.btn-wrapper {
+  width: 100%;
+  text-align: center;
+  margin-top: 3rem;
+}
+

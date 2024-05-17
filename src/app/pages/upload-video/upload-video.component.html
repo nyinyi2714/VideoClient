@@ -1,2 +1,11 @@
-<input type="file" (change)="onFileSelected($event)">
-<button (click)="uploadFile()">Upload Video</button>
+<form (submit)="uploadFile($event)">
+  <input type="file" (change)="onFileSelected($event)">
+  @if(isUploading) {
+    <p>Uploading...</p>
+    <button>Cancel</button>
+  }
+  <button type="submit">Upload</button>
+  @if(uploadSuccessful) {
+    <p>Upload Successful</p>
+  }
+</form>

@@ -36,7 +36,9 @@ h2, h3, h4, p {
 
 .video-card {
   width: 350px;
+  height: 100%;
   display: flex;
+  margin-bottom: 1rem;
   flex-wrap: nowrap;
   background-color: #fff;
   cursor: pointer;
@@ -49,12 +51,14 @@ h2, h3, h4, p {
 
 .aside video {
   width: 150px;
+  height: 100%;
   object-fit: cover;
 }
 
 .video-title {
   font-style: normal;
   width: 100%;
+  text-align: left;
 
   overflow: hidden;
   -webkit-line-clamp: 2;
@@ -95,16 +99,12 @@ h2 {
 .profile > span {
   display: inline-block;
   color: white;
-  background-color: #c2185b;
+  background-color: var(--primary-color);
   width: 30px;
   height: 30px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-}
-
-h3, h4 {
-  font-style: italic;
 }
 
 .background-color {

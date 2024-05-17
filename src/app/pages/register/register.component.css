@@ -37,6 +37,10 @@ label {
   display: inline-block;
 }
 
+.input > p {
+  color: #cd0000 !important; 
+}
+
 input {
   padding: 0.5rem;
   font-size: 1rem;
@@ -48,7 +52,7 @@ button {
   width: 100%;
   color: #fff;
   font-size: 1.1rem;
-  background-color: #c2185b;
+  background-color: var(--primary-color);
   display: block;
 }
 

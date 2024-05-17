@@ -16,24 +16,25 @@ export class RegisterComponent implements OnInit {
   public errorMessage = "";
 
   constructor(private authService: AuthService, private router: Router) { }
-
+  
   ngOnInit(): void {
-    this.form = new UntypedFormGroup({ 
-      username: new FormControl('', [Validators.required, Validators.minLength(3)]), 
-      password: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    this.form = new UntypedFormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [Validators.required, Validators.minLength(3), this.usernameValidator]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), this.passwordValidator]),
       confirmPassword: new FormControl('', Validators.required),
-    });
+    }, this.passwordMatchValidator );
   }
 
-  // TODO: implement validators and only send valid credentials
-  onSubmit() {
-    // Check if form is invalid before submitting
-    if (this.form.invalid) { 
-      console.log('invalid form')
+  onSubmit(event: any) {
+    event.preventDefault();
+    if(this.form.status === "INVALID") {
+      console.log('a')
+      this.errorMessage = "Please enter valid inputs in the above fields."
       return;
     }
-
-    let registerRequest : RegisterRequest = <RegisterRequest> { 
+    let registerRequest: RegisterRequest = <RegisterRequest>{
+      email: this.form.controls["email"].value,
       username: this.form.controls["username"].value,
       password: this.form.controls["password"].value,
     };
@@ -51,9 +52,40 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  // Custom validator functions
+  private usernameValidator(control: AbstractControl): ValidationErrors | null {
+    const username: string = control.value;
+    const usernameRegex: RegExp = /^[a-zA-Z0-9]+$/;
+    return usernameRegex.test(username) ? null : { invalidUsername: true };
+  }
+
   private passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value;
-    const confirmPassword = control.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
+    return control.value.password === control.value.confirmPassword
+    ? null
+    : { passwordNoMatch: true };
+  }
+
+  private passwordValidator(control: AbstractControl): ValidationErrors | null {
+    const password: string = control.value;
+
+    // Regular expressions for checking password criteria
+    const lowercaseRegex = /[a-z]/;
+    const uppercaseRegex = /[A-Z]/;
+    const digitRegex = /\d/;
+    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+    // Check if password meets all criteria
+    const isLowercaseValid = lowercaseRegex.test(password);
+    const isUppercaseValid = uppercaseRegex.test(password);
+    const isDigitValid = digitRegex.test(password);
+    const isSpecialCharValid = specialCharRegex.test(password);
+
+    // Return validation errors if any criteria is not met
+    return !isLowercaseValid ||
+      !isUppercaseValid ||
+      !isDigitValid ||
+      !isSpecialCharValid
+      ? { invalidPassword: true }
+      : null;
   }
 }

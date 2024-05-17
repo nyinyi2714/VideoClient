@@ -23,11 +23,13 @@
   </div>
 
   <div class="aside">
-    <h2>Next Videos</h2>
+    <h2>More Videos</h2>
     @if(userVideos != null && userVideos.length > 0) {
       @for (video of userVideos; track $index) {
-        <a [routerLink]="['/user/', video.username]" class="video-card">
-          <video [src]="video.url"></video>
+        <button [routerLink]="['/video/', video.videoId]" class="video-card" (click)="changeVideo(video.videoId)">
+          <video preload="metadata">
+            <source [src]="video.url + '#t=10'" type="video/mp4">
+          </video>
           <div class="aside-video">
             <h3 class="video-title">{{ video.title }}</h3>
             <div class="profile">
@@ -39,16 +41,16 @@
               <p>{{ formatDate(video.timestamp) }}</p>
             </div>
           </div>
-        </a>
+        </button>
       }
     }
     @else {
-      <p class="message">No more Videos from the current video uploader.</p>
+      <p class="message">No more Videos from the current user.</p>
     }
   </div>
 </section>
 }
 
 @else {
-<p>no video found!</p>
+<p>Loading...</p>
 }

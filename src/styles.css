@@ -1,5 +1,6 @@
 :root {
   --light-grey: #d3d3d3;
+  --primary-color: #c2185b;
 }
 
 html, body { 
@@ -28,4 +29,39 @@ button {
   border: 1px solid;
   outline: none;
   cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6 !important;
+  cursor: default;
+}
+
+.btn {
+  padding: 0.5rem 0.7rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  margin: 1rem auto;
+  font-size: 1rem;
+}
+
+
+.end-of-list {
+  width: 100%;
+  border-top: 1px dashed;
+  margin-top: 3rem !important;
+  position: relative;
+}
+
+.end-of-list > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  text-align: center;
+  padding: 1rem;
+  background-color: #fff;
 }

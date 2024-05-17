@@ -1,0 +1,19 @@
+<section class="login">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+    <h1>Welcome Back</h1>
+    <div class="input">
+      <label for="username">Username</label>
+      <input id="username" formControlName="username" required="required" placeholder="Enter Username">
+    </div>
+
+    <div class="input">
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" type="password" required="required" placeholder="Enter Password">
+    </div>
+
+    @if(errorMessage.length > 0){ <p class="error-message">{{ errorMessage }}</p> }
+
+    <button color="primary" type="submit">Login</button>
+    <p>Don't have an account? <a [routerLink]="['/register']"><u>Register Here</u></a></p>
+  </form>
+</section>

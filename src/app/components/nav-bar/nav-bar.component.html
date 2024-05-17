@@ -1,0 +1,21 @@
+<header>
+  <mat-toolbar color="primary">
+      <button mat-icon-button [routerLink]="['/']">
+          <mat-icon>home</mat-icon>
+      </button>
+
+      @if (isLoggedIn && username) { 
+        <a mat-flat-button color="primary" [routerLink]="['/upload']">Upload Video</a>
+        <a mat-flat-button color="primary" [routerLink]="['/user/', username]">Profile</a>
+      }
+
+      <span class="separator"></span>
+
+      @if (isLoggedIn) { 
+        <a mat-flat-button color="primary" (click)="onLogout()">Log Out</a> 
+      }
+      @else { 
+        <a mat-flat-button color="primary" [routerLink]="['/login']">Login</a> 
+      }
+  </mat-toolbar>
+</header>   

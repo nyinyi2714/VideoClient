@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { NavBarComponent } from "./nav-bar/nav-bar.component";
-import { HomepageComponent } from './homepage/homepage.component';
+import { NavBarComponent } from "./components/nav-bar/nav-bar.component";
+import { HomepageComponent } from './pages/homepage/homepage.component';
 
 @Component({
     selector: 'app-root',

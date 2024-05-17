@@ -1,0 +1,46 @@
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.videos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: left;
+}
+
+.video-card {
+  width: max-content;
+  background-color: #fff;
+  border: 1px solid var(--light-grey);
+  cursor: pointer;
+}
+
+mat-card-title {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: fit-content;
+  max-width: 250px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+mat-card-content {
+  padding: 0 0.7rem 0.7rem !important;
+  display: flex;
+  flex-direction: column;
+}
+
+h3 {
+  font-style: italic;
+}
+
+.footer-content {
+  margin-top: 0.7rem;
+  display: flex;
+  gap: 0.3rem;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: rgb(98, 98, 98);
+}

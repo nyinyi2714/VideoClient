@@ -1,5 +1,3 @@
-import { UserType } from "./User";
-
 export type VideoType = {
   videoId: number;
   url: string;
@@ -7,5 +5,5 @@ export type VideoType = {
   description: string;
   views: number;
   timestamp: string;
-  user: UserType;
+  username: string;
 }

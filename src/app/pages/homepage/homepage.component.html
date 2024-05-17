@@ -1,0 +1,69 @@
+@if (!recentVideos || !popularVideos) {<p>Loading...</p>}
+@else {
+  <section class="homepage">
+    <h2>New Videos</h2>
+    <article class="videos-container">
+      @for (video of recentVideos; track $index) {
+        <a [routerLink]="['/video/', video.videoId]">
+          <mat-card class="video-card">
+            <video [src]="video.url"></video>
+          
+            <mat-card-content>
+              <mat-card-title>{{ video.title }}</mat-card-title>
+              <a [routerLink]="['/user/', video.username]" class="profile">
+                <span>{{ video.username[0] }}</span>
+                <h3>{{ video.username }}</h3>
+              </a>
+              <div class="footer-content">
+                <p>
+                  {{ video.views }} 
+                  @if (video.views <= 1) {
+                    view
+                  }
+                  @else {
+                    views
+                  }
+                </p>
+                <p>{{ formatDate(video.timestamp) }}</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </a>
+      }
+    </article>
+
+    <h2>Popular Videos</h2>
+    <article class="videos-container">
+      @for (video of popularVideos; track $index) {
+        <a [routerLink]="['/video/', video.videoId]">
+          <mat-card class="video-card">
+            <video [src]="video.url"></video>
+          
+            <mat-card-content>
+              <mat-card-title>{{ video.title }}</mat-card-title>
+              <a [routerLink]="['/user/', video.username]" class="profile">
+                <span>{{ video.username[0] }}</span>
+                <h3>{{ video.username }}</h3>
+              </a>
+              <div class="footer-content">
+                <p>
+                  {{ video.views }} 
+                  @if (video.views <= 1) {
+                    view
+                  }
+                  @else {
+                    views
+                  }
+                </p>
+                <p>{{ formatDate(video.timestamp) }}</p>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </a>
+      }
+    </article>
+    
+  </section>
+
+}
+

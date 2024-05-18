@@ -1,0 +1,36 @@
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  padding-bottom: 1rem;
+}
+
+.upload-form {
+  margin: auto;
+  border: 1px solid;
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
+}
+
+input, .input {
+  width: 100%;
+}
+
+.input > p {
+  color: #cd0000;
+}
+
+label {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  display: inline-block;
+}
+
+input {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.file-input {
+  margin-top: 1rem;
+}

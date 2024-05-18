@@ -1,39 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../../services/upload/upload.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Subject, takeUntil } from 'rxjs';
-import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { FormControl, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-upload-video',
   standalone: true,
-  imports: [MatProgressBarModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './upload-video.component.html',
   styleUrl: './upload-video.component.css'
 })
-export class UploadVideoComponent {
-  public file : File | null = null;
+export class UploadVideoComponent implements OnInit {
+  public form!: UntypedFormGroup;
+  public videoFile: File | null = null;
+
   public username = '';
-  public uploadSuccessful = false;
-  public isUploading = false;
-  private ngUnsubscribe = new Subject(); 
-  
-  constructor(private uploadService: UploadService, private authService : AuthService) {
+  public uploadStatus = '';
+  private ngUnsubscribe = new Subject();
+
+  constructor(private uploadService: UploadService, private authService: AuthService) {
     authService.currUsername.pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(result => this.username = result);
+      .subscribe(result => this.username = result);
+  }
+  
+  ngOnInit(): void {
+    this.form = new UntypedFormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required)
+    });
   }
 
   onFileSelected(event: any) {
-    this.file = event.target.files[0];
+    this.videoFile = event.target.files[0];
   }
 
-  uploadFile(event: Event) {
+  uploadVideoFile(event: any) {
     event.preventDefault();
-    if (this.file) {
-      this.uploadService.uploadVideo(this.file, this.username, 'title', 'description')
-        .subscribe((success : boolean) => {
-          this.uploadSuccessful = success;
+    event.target.disabled = true;
+
+    if (this.videoFile) {
+      this.uploadService.uploadVideo(
+        this.videoFile, 
+        this.username,
+        this.form.controls['title'].value,
+        this.form.controls['description'].value
+      )
+        .subscribe((status: string) => {
+          this.uploadStatus = status;
+          if(status !== 'Uploading') {
+            event.target.disabled = false;
+            this.resetForm();
+          }
         });
+    }
+  }
+
+  resetForm() {
+    this.form.reset();
+    this.videoFile = null;
+    // Clear the file input field 
+    const uploadForm: HTMLFormElement = document.querySelector('#upload-form') as HTMLFormElement;
+    if (uploadForm) {
+      uploadForm.reset();
     }
   }
 

@@ -1,11 +1,29 @@
-<form (submit)="uploadFile($event)">
-  <input type="file" (change)="onFileSelected($event)">
-  @if(isUploading) {
-    <p>Uploading...</p>
-    <button>Cancel</button>
-  }
-  <button type="submit">Upload</button>
-  @if(uploadSuccessful) {
-    <p>Upload Successful</p>
-  }
-</form>
+<section>
+  <h1>Upload Your Video</h1>
+  <form [formGroup]="form" class="upload-form" id="upload-form">
+    <div class="input">
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" required="required" placeholder="Enter video title">
+      @if(form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched) && form.controls['title'].errors?.['required']) {
+        <p>Video title is required</p>
+      }
+    </div>
+
+    <div class="input">
+      <label for="description">Description</label>
+      <input id="description" formControlName="description" type="description" required="required" placeholder="Enter video description">
+      @if(form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched) && form.controls['description'].errors?.['required']) {
+        <p>Video description is required</p>
+      }
+    </div>
+
+    <div class="input file-input">
+      <input type="file" (change)="onFileSelected($event)">
+    </div>
+
+    <button type="button" class="btn" (click)="uploadVideoFile($event)">Upload</button>
+    @if(uploadStatus !== null) {
+      <p>{{ uploadStatus }}</p>
+    }
+  </form>
+</section>

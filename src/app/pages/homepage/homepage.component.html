@@ -1,7 +1,7 @@
 @if (!recentVideos || !popularVideos) {<p>Loading...</p>}
 @else {
   <section class="homepage">
-    <h2>Recented Added</h2>
+    <h2>Recently Added</h2>
     <article class="videos-container">
       @for (video of recentVideos; track $index) {
         <a [routerLink]="['/video/', video.videoId]">

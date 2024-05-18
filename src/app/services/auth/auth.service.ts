@@ -6,7 +6,7 @@ import { LoginResult } from '../../Types/login-result';
 import { environment } from '../../../environments/environment.development';
 import { RegisterRequest } from '../../Types/register-request';
 import { RegisterResult } from '../../Types/register-result';
-import { CheckTokenResult } from '../../Types/CheckTokenResult';
+import { CheckTokenResult } from '../../Types/check-token-result';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +36,7 @@ export class AuthService {
 
     try {
       const checkTokenResult = await firstValueFrom(this.checkTokenValidity());
-      if (!checkTokenResult.isTokenValid) return false;
-
-      // Set current username if the token is valid
-      this.setCurrUsername(checkTokenResult.username);
-      return true;
-      
+      return checkTokenResult.isTokenValid;
     } catch (error) {
       // Return false if there's an error
       return false;

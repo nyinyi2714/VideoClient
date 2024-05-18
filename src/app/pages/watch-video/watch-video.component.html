@@ -43,6 +43,7 @@
           </div>
         </button>
       }
+      <a [routerLink]="['/user/', mainVideo.username]" class="btn">View More</a>
     }
     @else {
       <p class="message">No more Videos from the current user.</p>

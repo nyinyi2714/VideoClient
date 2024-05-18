@@ -33,7 +33,7 @@ button {
 
 button:disabled {
   opacity: 0.6 !important;
-  cursor: default;
+  cursor: wait;
 }
 
 .btn {

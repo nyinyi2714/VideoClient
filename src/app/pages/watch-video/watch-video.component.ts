@@ -1,14 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 import { VideoPlayerComponent } from '../../components/video-player/video-player.component';
-import { VideoType } from '../../Types/Video';
-import { environment } from '../../../environments/environment.development';
-import { UserProfileType } from '../../Types/UserProfile';
+import { VideoType } from '../../Types/video';
 import { DateUtils } from '../../utils/date-utils';
+import { FetchVideoService } from '../../services/video/fetch-video.service';
 
 @Component({
   selector: 'app-watch-video',
@@ -22,9 +20,9 @@ export class WatchVideoComponent implements OnInit {
   userVideos: VideoType[] | null = null;
 
   constructor(
-    private http: HttpClient, 
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private fetchVideoService: FetchVideoService,
+    private route: ActivatedRoute,
+    private router: Router,
     private dateUtils: DateUtils
   ) { }
 
@@ -34,7 +32,7 @@ export class WatchVideoComponent implements OnInit {
 
     // Redirect to 404 page if no videoId
     if (!videoId) {
-      this.router.navigate(['/page-not-found']);
+      this.redirectToPageNotFound();
       return;
     }
 
@@ -42,42 +40,44 @@ export class WatchVideoComponent implements OnInit {
   }
 
   changeVideo(videoId: number) {
-    this.router.navigate([`/video/${videoId}`]);
     // to reload the video player to play the new video src
-    location.reload(); 
+    location.replace(`/video/${videoId}`);
   }
-  
-  // TODO: button to get more video. get total video to determine the end
 
-  // Fetch video data from server using the videoId
+  // Fetch video data using the fetchVideoService
   getVideoData(videoId: string) {
-    this.http.get<VideoType>(environment.baseURL + `Videos/${videoId}`).subscribe(
-      {
+    this.fetchVideoService.getVideoData(videoId)
+      .subscribe({
         next: result => {
           this.mainVideo = result;
-          // call getUserVideos() only after getVideoData is completed
-          this.getUserVideos();
+          // Get related videos after main video is fetched
+          this.getUserVideos(result.username); 
         },
-        error: error => console.error(error)
-      }
-    );
+        error: error => {
+          console.error(error);
+          this.redirectToPageNotFound();
+        }
+      });
   }
 
-  // Get 10 More Videos of the current video uploader (user) 
-  // excluding the currently playing video (mainVideo)
-  getUserVideos() {
-    if(this.mainVideo != null) {
-      this.http.get<UserProfileType>(environment.baseURL + `Users/${this.mainVideo.username}`).subscribe(
-        {
-          // remove mainVideo from moreUserVideos List to avoid displaying mainVideo in more Video list
-          next: result => this.userVideos = result.videos.filter(video => video.videoId !== this.mainVideo?.videoId),
+  // Get related videos using the fetchVideoService
+  getUserVideos(username: string) {
+    if (this.mainVideo) {
+      this.fetchVideoService.getUserVideos(username)
+        .subscribe({
+          next: result => {
+            this.userVideos = result.videos.filter(video => video.videoId !== this.mainVideo?.videoId);
+          },
           error: error => console.error(error)
-        }
-      );
+        });
     }
   }
 
-  formatDate(timestamp : string) {
+  formatDate(timestamp: string) {
     return this.dateUtils.formatDate(timestamp);
+  }
+
+  redirectToPageNotFound() {
+    this.router.navigate(['/page-not-found']);
   }
 }

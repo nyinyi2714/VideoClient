@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router'; 
 import { MatCardModule } from '@angular/material/card'
 
-import { VideoType } from '../../Types/Video';
+import { VideoType } from '../../Types/video';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { DateUtils } from '../../utils/date-utils';

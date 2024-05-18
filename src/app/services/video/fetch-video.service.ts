@@ -27,6 +27,13 @@ export class FetchVideoService {
       );
   }
 
+  searchVideosByTitle(videoTitle: string): Observable<VideoType[]> {
+    return this.http.get<VideoType[]>(environment.baseURL + `Videos/search/${videoTitle}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: any) {
     console.error('Error occurred:', error);
     return throwError(() => new Error('Something went wrong. Please try again later.'));

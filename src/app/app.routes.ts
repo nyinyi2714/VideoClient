@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UploadVideoComponent } from './pages/upload-video/upload-video.component';
+import { SearchVideoComponent } from './pages/search-video/search-video.component';
 
 export const routes: Routes = [
     { path: "", component: HomepageComponent, pathMatch: "full" },
@@ -15,4 +16,5 @@ export const routes: Routes = [
     { path: "page-not-found", component: PageNotFoundComponent },
     { path: "video/:videoId", component: WatchVideoComponent },
     { path: "user/:username", component: UserProfileComponent },
+    { path: "search/:searchQuery", component: SearchVideoComponent },
 ];

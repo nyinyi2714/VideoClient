@@ -1,6 +1,12 @@
 @if (!recentVideos || !popularVideos) {<p>Loading...</p>}
 @else {
   <section class="homepage">
+    <form (submit)="searchVideos($event)">
+      <input type="search" class="search-input" (change)="handleSearchInput($event)" placeholder="Search video title">
+      <button class="btn" type="submit">Search</button>
+    </form>
+    
+
     <h2>Recently Added</h2>
     <article class="videos-container">
       @for (video of recentVideos; track $index) {

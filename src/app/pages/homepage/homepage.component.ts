@@ -1,24 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router'; 
+import { Router, RouterLink } from '@angular/router'; 
 import { MatCardModule } from '@angular/material/card'
 
 import { VideoType } from '../../Types/video';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { DateUtils } from '../../utils/date-utils';
+import { VideoPlayerComponent } from '../../components/video-player/video-player.component';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [MatCardModule, RouterLink],
+  imports: [MatCardModule, RouterLink, VideoPlayerComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent implements OnInit {
   public recentVideos : VideoType[] = [];
   public popularVideos : VideoType[] = [];
+  public searchQuery = '';
 
-  constructor(private http: HttpClient, private dateUtils: DateUtils) {}
+  constructor(
+    private http: HttpClient, 
+    private dateUtils: DateUtils, 
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.getRecentVideos();
@@ -41,6 +47,16 @@ export class HomepageComponent implements OnInit {
         error: error => console.error(error)
       }
     );
+  }
+
+  handleSearchInput(event: any) {
+    this.searchQuery = event.target.value;
+  }
+
+  searchVideos(event : any) {
+    event.preventDefault();
+    if(this.searchQuery.length <= 0) return;
+    this.router.navigate(['/search', this.searchQuery]);
   }
 
   formatDate(timestamp : string) {

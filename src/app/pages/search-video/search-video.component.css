@@ -3,17 +3,6 @@ h3, p {
   margin: 0;
 }
 
-.search-input {
-  width: 100%;
-  max-width: 600px;
-  padding: 0.3rem;
-  font-size: 1rem;
-  outline: none;
-  border-radius: 5px;
-  border-color: var(--primary-color);
-  margin-right: 1rem;
-}
-
 .videos-container {
   display: flex;
   flex-wrap: wrap;
@@ -85,5 +74,6 @@ mat-card-content {
   color: rgb(98, 98, 98);
 }
 
-
-
+h1 {
+  font-size: 1.5rem;
+}

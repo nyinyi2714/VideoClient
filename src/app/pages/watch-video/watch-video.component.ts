@@ -40,8 +40,13 @@ export class WatchVideoComponent implements OnInit {
   }
 
   changeVideo(videoId: number) {
-    // to reload the video player to play the new video src
-    location.replace(`/video/${videoId}`);
+    this.router.navigate(['/video', videoId]);
+    
+    this.getVideoData(videoId + '');
+    const video : any = document.getElementById('mainVideo');
+    if(video) {
+      video.load();
+    }
   }
 
   // Fetch video data using the fetchVideoService

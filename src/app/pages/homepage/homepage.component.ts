@@ -16,8 +16,8 @@ import { VideoPlayerComponent } from '../../components/video-player/video-player
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent implements OnInit {
-  public recentVideos : VideoType[] = [];
-  public popularVideos : VideoType[] = [];
+  public recentVideos : VideoType[] | null = null;
+  public popularVideos : VideoType[] | null= null;
   public searchQuery = '';
 
   constructor(

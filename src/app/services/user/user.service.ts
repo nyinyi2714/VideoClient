@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { UserProfileType } from '../../Types/user-profile';
@@ -26,11 +26,15 @@ export class UserService {
   }
 
   loadMoreVideos(username: string, skip: number): Observable<UserProfileType> {
-    return this.http.get<UserProfileType>(environment.baseURL + `Users/${username}${skip > 0 ? '?skip=' + skip : ''}`)
+    const params = new HttpParams().set('skip', skip.toString());
+    const url = `${environment.baseURL}Users/${username}`;
+
+    return this.http.get<UserProfileType>(url, { params })
       .pipe(
         catchError(this.handleError)
       );
-  }
+}
+
 
   private handleError(error: any) {
     console.error('Error occurred:', error);

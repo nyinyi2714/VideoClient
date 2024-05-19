@@ -27,7 +27,7 @@
     @if(userVideos != null && userVideos.length > 0) {
       @for (video of userVideos; track $index) {
         <button class="video-card" (click)="changeVideo(video.videoId)">
-          <video preload="metadata">
+          <video preload="metadata" name="video-player">
             <source [src]="video.url + '#t=10'" type="video/mp4">
           </video>
           <div class="aside-video">

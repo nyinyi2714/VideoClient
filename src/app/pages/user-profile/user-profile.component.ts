@@ -95,7 +95,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
 
     this.isLoadingVideos = true;
-    this.userService.loadMoreVideos(this.user.username, this.currVideoIndexSkip)
+    this.userService.loadMoreVideos(this.user.username, ++this.currVideoIndexSkip)
       .subscribe({
         next: result => {
           if (this.user) {

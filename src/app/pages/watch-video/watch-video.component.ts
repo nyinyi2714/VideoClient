@@ -40,13 +40,8 @@ export class WatchVideoComponent implements OnInit {
   }
 
   changeVideo(videoId: number) {
-    this.router.navigate(['/video', videoId]);
-    
     this.getVideoData(videoId + '');
-    const video : any = document.getElementById('mainVideo');
-    if(video) {
-      video.load();
-    }
+    this.router.navigate(['/video', videoId]);
   }
 
   // Fetch video data using the fetchVideoService
@@ -56,7 +51,7 @@ export class WatchVideoComponent implements OnInit {
         next: result => {
           this.mainVideo = result;
           // Get related videos after main video is fetched
-          this.getUserVideos(result.username); 
+          this.getUserVideos(result.username);
         },
         error: error => {
           console.error(error);
@@ -72,6 +67,14 @@ export class WatchVideoComponent implements OnInit {
         .subscribe({
           next: result => {
             this.userVideos = result.videos.filter(video => video.videoId !== this.mainVideo?.videoId);
+
+            // Reload Video Elements to play the new video
+            const videos: NodeListOf<HTMLVideoElement> = document.querySelectorAll('[name="video-player"]') as NodeListOf<HTMLVideoElement>;
+            if (videos) {
+              videos.forEach((v: HTMLVideoElement) => {
+                v.load();
+              });
+            }
           },
           error: error => console.error(error)
         });

@@ -24,7 +24,7 @@
       <vg-fullscreen></vg-fullscreen>
     </vg-controls>
 
-    <video [vgMedia]="$any(videoPlayer)" #videoPlayer id="mainVideo" preload="auto" crossorigin autoplay>
+    <video [vgMedia]="$any(videoPlayer)" #videoPlayer id="mainVideo" name="video-player" preload="auto" crossorigin autoplay>
       <source [src]="videoURL" type="video/mp4">
     </video>
   </vg-player>

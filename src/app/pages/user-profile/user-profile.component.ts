@@ -19,7 +19,6 @@ import { UserService } from '../../services/user/user.service';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   user: UserProfileType | null = null;
-  currVideoIndexSkip = 0;
   isLoadingVideos = false;
   isUserAuthorized = false;
   currLoggedInUsername = '';
@@ -95,13 +94,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
 
     this.isLoadingVideos = true;
-    this.userService.loadMoreVideos(this.user.username, ++this.currVideoIndexSkip)
+    this.userService.loadMoreVideos(this.user.username, this.user.videos.length)
       .subscribe({
         next: result => {
           if (this.user) {
             this.user.videos.push(...result.videos);
           }
-          this.currVideoIndexSkip++;
           this.isLoadingVideos = false;
         },
         error: error => {

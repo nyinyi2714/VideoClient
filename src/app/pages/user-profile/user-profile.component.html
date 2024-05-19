@@ -30,7 +30,7 @@
     </a>
     }
   </div>
-  @if(user && ((currVideoIndexSkip+1)*5) < user.totalVideos) { <div class="btn-wrapper">
+  @if(user && user.videos.length < user.totalVideos) { <div class="btn-wrapper">
     <button class="btn" type="button" [disabled]="isLoadingVideos" (click)="loadMoreVideos()">
       {{isLoadingVideos ? 'Loading More Videos' : 'View More'}}
     </button>

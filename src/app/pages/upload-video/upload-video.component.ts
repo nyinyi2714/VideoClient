@@ -32,14 +32,26 @@ export class UploadVideoComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    this.videoFile = event.target.files[0];
+    const file = event.target.files[0];
+
+    const maxSizeMB = 25; 
+    const maxSizeBytes = maxSizeMB * 1024 * 1024; 
+
+     if (file) {
+        if (file.size > maxSizeBytes) {
+            alert(`The selected file is too large. Maximum allowed size is ${maxSizeMB} MB.`);
+            event.target.value = '';
+        } else {
+            this.videoFile = file;
+        }
+    }
   }
 
   uploadVideoFile(event: any) {
     event.preventDefault();
-    event.target.disabled = true;
-
-    if (this.videoFile) {
+    
+    if (this.videoFile !== null) {
+      event.target.disabled = true;
       this.uploadService.uploadVideo(
         this.videoFile, 
         this.username,

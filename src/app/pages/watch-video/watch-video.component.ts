@@ -23,7 +23,7 @@ export class WatchVideoComponent implements OnInit {
     private fetchVideoService: FetchVideoService,
     private route: ActivatedRoute,
     private router: Router,
-    private dateUtils: DateUtils
+    private dateUtils: DateUtils,
   ) { }
 
   ngOnInit() {
@@ -40,8 +40,9 @@ export class WatchVideoComponent implements OnInit {
   }
 
   changeVideo(videoId: number) {
-    this.getVideoData(videoId + '');
-    this.router.navigate(['/video', videoId]);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/video', videoId]);
+    });
   }
 
   // Fetch video data using the fetchVideoService
@@ -67,14 +68,6 @@ export class WatchVideoComponent implements OnInit {
         .subscribe({
           next: result => {
             this.userVideos = result.videos.filter(video => video.videoId !== this.mainVideo?.videoId);
-
-            // Reload Video Elements to play the new video
-            const videos: NodeListOf<HTMLVideoElement> = document.querySelectorAll('[name="video-player"]') as NodeListOf<HTMLVideoElement>;
-            if (videos) {
-              videos.forEach((v: HTMLVideoElement) => {
-                v.load();
-              });
-            }
           },
           error: error => console.error(error)
         });

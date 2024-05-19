@@ -65,7 +65,3 @@ button:disabled {
   padding: 1rem;
   background-color: #fff;
 }
-
-div.vg-buffering {
-  display: none !important;
-}

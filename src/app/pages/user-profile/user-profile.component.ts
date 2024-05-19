@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -8,6 +7,7 @@ import { DateUtils } from '../../utils/date-utils';
 import { AuthService } from '../../services/auth/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UserService } from '../../services/user/user.service';
+import { VideoUtils } from '../../utils/video-utils';
 
 
 @Component({
@@ -29,7 +29,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: DateUtils,
-    private authService: AuthService
+    private authService: AuthService,
+    private videoUtils: VideoUtils,
   ) {
     authService.currUsername.pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(currUsername => {
@@ -79,6 +80,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             this.user.videos = this.user.videos.filter(v => v.videoId !== videoId);
             this.user.totalVideos--;
             event.target.disabled = false;
+            this.videoUtils.reloadVideoPlayers();
           }
         },
         error: error => {

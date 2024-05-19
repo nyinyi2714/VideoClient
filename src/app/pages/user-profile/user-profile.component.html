@@ -2,6 +2,11 @@
 <section class="user-profile">
   <h1>{{user.username}}'s Videos</h1>
   <h2>Total {{ user.totalVideos }} Videos</h2>
+
+  @if(!isUserAuthorized) {
+    <h3>If you are the owner of this profile page, please log in to gain admin access.</h3>
+  }
+
   <div class="videos-container">
     @for (video of user.videos; track $index) {
     <a [routerLink]="['/video/', video.videoId]">
